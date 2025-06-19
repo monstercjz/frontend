@@ -1,9 +1,18 @@
-
-
 {
+  "env": {
+    "PRIVATE_BACKEND_API_URL": "@private_backend_api_url"
+  },
   "rewrites": [
+    {
+      "source": "/api/:match*",
+      
+      "destination": "{{PRIVATE_BACKEND_API_URL}}/api/:match*"
+      
+    },
     
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ]
-  
 }
