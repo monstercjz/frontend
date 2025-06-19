@@ -1,4 +1,4 @@
-export const backendUrl = 'http://localhost:3000/api';
+export const backendUrl = 'https://dywsuaqtibhj.ap-southeast-1.clawcloudrun.com:3000/api';
 // config.js
 //以下内容是groupoperationservice.js中引用的常量
 // 模态框相关常量
