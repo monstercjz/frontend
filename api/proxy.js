@@ -1,5 +1,12 @@
-// api/proxy.js (Temporarily identical to hello.js for testing)
+// api/proxy.js
 export default function handler(req, res) {
-  console.log('[PROXY TEST LOG] Proxy function (acting as hello) invoked! Request URL:', req.url);
-  res.status(200).send('Response from proxy.js (acting as hello)!');
+  console.log('--- NEW PROXY INVOCATION ---');
+  console.log('Full Request URL from Vercel:', req.url); // 这个非常关键
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  res.status(200).json({
+    message: 'Proxy function received request.',
+    requestUrl: req.url,
+    method: req.method,
+    headers: req.headers
+  });
 }
