@@ -1,4 +1,4 @@
-export const backendUrl = '/api';
+export const backendUrl = '/api/mygateway';
 // config.js
 //以下内容1是groupoperationservice.js中引用的常量
 // 模态框相关常量
