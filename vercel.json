@@ -2,9 +2,8 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://dywsuaqtibhj.ap-southeast-1.clawcloudrun.com/api/:match*"
+      "destination": "${BACKEND_API_BASE_URL}/api/:match*"
     }
-    
   ],
   "cleanUrls": true,
   "trailingSlash": false
