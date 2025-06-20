@@ -1,9 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/test-env-param", 
-      "destination": "YOUR_WEBHOOK_SITE_URL?my_var=${TEST_VAR}"
-      
+      "source": "/test-env-param",
+      "destination": "https://webhook.site/455215db-e756-44bb-845f-660100f3113c?my_var=${TEST_VAR}"
     },
     {
       "source": "/api/:match*",
