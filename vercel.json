@@ -1,14 +1,16 @@
 {
-  "rewrites": [
+  "headers": [
     {
-      "source": "/api/test-rewrite",
-      "destination": "https://www.google.com"
-    },
-    {
-      "source": "/api/:match*",
-      "destination": "${ACTUAL_BACKEND_URL}/:match*"
+      "source": "/(.*)", 
+      "headers": [
+        {
+          "key": "X-Vercel-Test-Header",
+          "value": "MyCustomHeaderValue"
+        }
+      ]
     }
   ],
+  
   "cleanUrls": true,
   "trailingSlash": false
 }
