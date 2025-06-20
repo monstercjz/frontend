@@ -1,8 +1,9 @@
 {
   "rewrites": [
     {
-      "source": "/test-env",
-      "destination": "https://example.com/?var=${TEST_VAR}"
+      "source": "/test-env-param", 
+      "destination": "YOUR_WEBHOOK_SITE_URL?my_var=${TEST_VAR}"
+      
     },
     {
       "source": "/api/:match*",
