@@ -1,12 +1,68 @@
-// 项目根目录下的 api/mygateway.js
+// api/mygateway.js
+export default async function handler(req, res) {
+  // console.log('[MYGATEWAY PROXY] Function invoked. Request URL:', req.url);
 
-export default function handler(req, res) {
-  // 移除所有其他 console.log，只保留这个，或者完全不加日志，专注于响应
-  // console.log('MyGateway function invoked. Request URL:', req.url);
+  const backendApiBaseUrl = process.env.BACKEND_API_BASE_URL; // 现在需要这个了
 
-  res.status(200).json({
-    message: 'MyGateway function received request successfully!',
-    requestedUrl: req.url, // 将收到的 URL 返回给客户端，方便调试
-    timestamp: new Date().toISOString()
-  });
+  if (!backendApiBaseUrl) {
+    console.error('[MYGATEWAY PROXY ERROR] BACKEND_API_BASE_URL environment variable is not set.');
+    return res.status(500).json({ error: 'Internal server error: API configuration missing.' });
+  }
+
+  // 从 req.url 中提取原始路径，需要移除 /api/mygateway 前缀
+  // 并且忽略 Vercel 可能附加的 ?match=... 查询参数 (如果它干扰路径解析)
+  // 或者，更好的做法是解析出真正的 pathname
+  const urlObject = new URL(req.url, `http://${req.headers.host}`); // 需要一个基础URL来正确解析
+  const originalPathname = urlObject.pathname.replace(/^\/api\/mygateway/, '');
+  const originalQuery = urlObject.search; // 获取原始查询字符串，如 ?param1=value1
+
+  // 构建目标URL时只使用原始的 pathname 和 query，忽略 Vercel 的 'match'
+  // 我们的后端期望的路径是 /api + originalPathname
+  const targetPathAndQuery = `/api${originalPathname}${originalQuery}`;
+  const targetUrl = `${backendApiBaseUrl}${targetPathAndQuery}`;
+
+  console.log(`[MYGATEWAY PROXY] Proxying from ${req.url} to target: ${targetUrl}`);
+
+  try {
+    const options = {
+      method: req.method,
+      headers: {
+        // 复制大部分原始请求头
+        ...req.headers,
+        // 覆盖或删除 host 头，让 fetch 根据 targetUrl 自动设置
+        host: new URL(targetUrl).host,
+        'x-vercel-deployment-url': undefined,
+        'x-vercel-id': undefined,
+        'x-forwarded-host': undefined,
+      },
+    };
+
+    if (req.method !== 'GET' && req.method !== 'HEAD' && req.body) {
+      // 假设Vercel已经处理了JSON body的解析
+      if (typeof req.body === 'object' && req.headers['content-type'] && req.headers['content-type'].includes('application/json')) {
+        options.body = JSON.stringify(req.body);
+      } else {
+        options.body = req.body; // Buffer or Stream
+      }
+    }
+
+    const backendResponse = await fetch(targetUrl, options);
+    const responseData = await backendResponse.text(); // 先用 .text() 确保能拿到任何类型的响应体
+
+    // console.log(`[MYGATEWAY PROXY] Backend status: ${backendResponse.status}`);
+
+    // 复制后端响应头
+    res.statusCode = backendResponse.status;
+    backendResponse.headers.forEach((value, name) => {
+      if (name.toLowerCase() !== 'content-encoding' && name.toLowerCase() !== 'transfer-encoding' && name.toLowerCase() !== 'connection') {
+         try { res.setHeader(name, value); } catch(e) { console.warn(`Could not set header ${name}: ${value}`); }
+      }
+    });
+
+    res.send(responseData);
+
+  } catch (error) {
+    console.error(`[MYGATEWAY PROXY ERROR] Error proxying to ${targetUrl}:`, error.message, error.stack);
+    res.status(502).json({ error: 'Bad Gateway', details: error.message });
+  }
 }
