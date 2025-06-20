@@ -1,10 +1,10 @@
 {
-  "headers": [  ],
   "rewrites": [
     {
-      "source": "/api/simple-env-test",
-      "destination": "https://httpbin.org/get?test_value=${MY_TEST_VAR}"
+      "source": "/api/:match*",
+      "destination": "https://dywsuaqtibhj.ap-southeast-1.clawcloudrun.com/api/:match*"
     }
+    
   ],
   "cleanUrls": true,
   "trailingSlash": false
