@@ -1,6 +1,6 @@
 export const backendUrl = '/api';
 // config.js
-//以下内容是groupoperationservice.js中引用的常量
+//以下内容1是groupoperationservice.js中引用的常量
 // 模态框相关常量
 export const MODAL_ID = 'groupModal';
 export const MODAL_TITLE_EDIT = '编辑分组';
