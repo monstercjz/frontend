@@ -4,7 +4,7 @@
     
     {
       "source": "/api/:match*",
-      "destination": "YOUR_BACKEND_API_BASE_URL/:match*" 
+      "destination": "http://115.190.98.146:3000/api/:match*"
     }
     
   ],
