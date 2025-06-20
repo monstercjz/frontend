@@ -1,11 +1,12 @@
+
+
 {
   "rewrites": [
     {
-      "source": "/api/mygateway/:match*",
-      "destination": "/api/mygateway"
+      "source": "/api/mygateway/:path*",
+      "destination": "/api/mygateway"   
     }
-    
   ],
-  "cleanUrls": true, 
+  "cleanUrls": true,
   "trailingSlash": false
 }
