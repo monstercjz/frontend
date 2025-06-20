@@ -1,8 +1,11 @@
 {
   "rewrites": [
     {
+      "source": "/api/test-rewrite",
+      "destination": "https://www.google.com"
+    },
+    {
       "source": "/api/:match*",
-      
       "destination": "${ACTUAL_BACKEND_URL}/:match*"
     }
   ],
