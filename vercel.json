@@ -1,0 +1,13 @@
+
+{
+  "rewrites": [
+    
+    {
+      "source": "/api/:match*",
+      "destination": "YOUR_BACKEND_API_BASE_URL/:match*" 
+    }
+    
+  ],
+  "cleanUrls": true,    
+  "trailingSlash": false 
+}
