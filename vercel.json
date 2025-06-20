@@ -1,8 +1,11 @@
 {
+  "headers": [  ],
   "rewrites": [
     {
-      "source": "/api/httpbin-test/:path*",
-      "destination": "https://httpbin.org/anything/test-path-segment/:path*?original_env=${ACTUAL_BACKEND_URL}"
+      "source": "/api/simple-env-test",
+      "destination": "https://httpbin.org/get?test_value=${MY_TEST_VAR}"
     }
-  ]
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
