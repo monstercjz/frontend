@@ -1,11 +1,13 @@
 {
   "rewrites": [
     {
+      "source": "/test-env",
+      "destination": "https://example.com/?var=${TEST_VAR}"
+    },
+    {
       "source": "/api/:match*",
-      
       "destination": "${BACKEND_API_BASE_URL}/api/:match*"
     }
-    
   ],
   "cleanUrls": true,
   "trailingSlash": false
