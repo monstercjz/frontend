@@ -1,8 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/test-only",
-      "destination": "https://webhook.site/455215db-e756-44bb-845f-660100f3113c?var_from_env=${TEST_VAR}"
-    }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }
