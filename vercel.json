@@ -1,15 +1,8 @@
 {
- 
   "rewrites": [
     {
-      "source": "/api/check-env", 
-      
-      "destination": "https://this-is-a-test.example.com/env_value_is_${ACTUAL_BACKEND_URL}/somepath"
-    },
-    { 
-      "source": "/api/:match*",
-      "destination": "${ACTUAL_BACKEND_URL}/:match*"
+      "source": "/api/httpbin-test/:path*",
+      "destination": "https://httpbin.org/anything/test-path-segment/:path*?original_env=${ACTUAL_BACKEND_URL}"
     }
   ]
-  
 }
