@@ -1,9 +1,13 @@
 {
   "rewrites": [
     {
-      "source": "/test-env-param", 
+      "source": "/simple-test",
+      "destination": "https://www.google.com" 
+    },
+    
+    {
+      "source": "/test-env-param",
       "destination": "YOUR_WEBHOOK_SITE_URL?my_var=${TEST_VAR}"
-      
     },
     {
       "source": "/api/:match*",
